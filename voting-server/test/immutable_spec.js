@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {List, Map} from 'immutable';
-import {setEntries, next} from '../src/core';
+import {setEntries, next, vote} from '../src/core';
 
 describe('immuntability', () => {
     describe('a number', () => {
@@ -92,8 +92,35 @@ describe('application logic', () => {
             expect(nextState).to.equal(Map({
                 entries: List.of('Wizard of Oz'),
                 vote: Map({
-                    pair: List.of('Sound of Music', 'Marry Poppins')
+                    pair: List.of('Sound of Music', 'Marry Poppins'),
                 })
+            }));
+        });
+    });
+
+    describe('vote', () => {
+        it('creates a tally for the voted entry', () => {
+            const state = Map({
+                vote: Map({
+                    pair: List.of('Sound of Music', 'Wizard of Oz'),
+                    tally: Map({
+                        'Sound of Music': 3,
+                        'Wizard of Oz': 1
+                    })
+                }),
+                entries: List()
+            });
+            const nextState = vote(state, 'Sound of Music');
+
+            expect(nextState).to.equal(Map({
+                vote: Map({
+                    pair: List.of('Sound of Music', 'Wizard of Oz'),
+                    tally: Map({
+                        'Sound of Music': 4,
+                        'Wizard of Oz': 1
+                    })
+                }),
+                entries: List()
             }));
         });
     });
