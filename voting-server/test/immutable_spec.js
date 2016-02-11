@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import {List, Map} from 'immutable';
+import {setEntries} from '../src/core';
 
 describe('immuntability', () => {
     describe('a number', () => {
@@ -63,6 +64,20 @@ describe('immuntability', () => {
                     'Mary Poppins',
                     'Wizard of Oz'
                 )
+            }));
+        });
+    });
+});
+
+describe('application logic', () => {
+    describe('setEntries', () => {
+        it('adds the entries to the state', () => {
+            const state = Map();
+            const entries = List.of('Sound of Music', 'Marry Poppins');
+            const nextState = setEntries(state, entries);
+
+            expect(nextState).to.equal(Map({
+                entries: List.of('Sound of Music', 'Marry Poppins')
             }));
         });
     });
