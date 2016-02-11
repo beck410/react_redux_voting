@@ -1,4 +1,5 @@
 import {expect} from 'chai';
+import {List} from 'immutable';
 
 describe('immuntability', () => {
     describe('a number', () => {
@@ -12,6 +13,29 @@ describe('immuntability', () => {
 
             expect(nextState).to.equal(43);
             expect(state).to.equal(42);
+        });
+    });
+
+    describe('a list', () => {
+        function addMovie(state, movie) {
+            return state.push(movie);
+        }
+
+        it('is immutable', () => {
+            let state = List.of('Sound of Music', 'Mary Poppins');
+            let nextState = addMovie(state, 'Wizard of Oz');
+
+            expect(nextState).to.equal(List.of(
+                'Sound of Music',
+                'Mary Poppins',
+                'Wizard of Oz'
+            ));
+
+            expect(state).to.equal(List.of(
+                'Sound of Music',
+                'Mary Poppins'
+            ));
+
         });
     });
 });
