@@ -8,6 +8,12 @@ export function next(state) {
     const entries = state.get('entries')
                     .concat(_getWinners(state.get('vote')));
 
+    if (entries.size == 1) {
+        return state.remove('vote')
+                .remove('entries')
+                .set('winner', entries.first());
+    }
+
     return state.merge({
         entries: entries.skip(2),
         vote: Map({pair: entries.take(2)})

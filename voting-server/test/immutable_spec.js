@@ -140,6 +140,24 @@ describe('application logic', () => {
             }));
         });
 
+        it('marks winner when just one entry left', () => {
+            const state = Map({
+                vote: Map({
+                    pair: List.of('Wizard of Oz', 'Mary Poppins'),
+                    tally: Map({
+                        'Wizard of Oz': 2,
+                        'Mary Poppins': 1
+                    })
+                }),
+                entries: List()
+            });
+
+            const nextState = next(state);
+
+            expect(nextState).to.equal(Map({
+                winner: 'Wizard of Oz'
+            }));
+        });
     });
 
     describe('vote', () => {
