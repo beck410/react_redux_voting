@@ -96,6 +96,50 @@ describe('application logic', () => {
                 })
             }));
         });
+
+        it('puts winner of current vote back to entries', () => {
+            const state = Map({
+                vote: Map({
+                    pair: List.of('Sound of Music', 'Wizard of Oz'),
+                    tally: Map({
+                        'Sound of Music': 4,
+                        'Wizard of Oz': 1
+                    })
+                }),
+                entries: List.of('Mary Poppins', 'Princess Bride')
+            });
+
+            const nextState = next(state);
+
+            expect(nextState).to.equal(Map({
+                vote: Map({
+                    pair: List.of('Mary Poppins', 'Princess Bride')
+                }),
+                entries: List.of('Sound of Music')
+            }));
+        });
+
+        it('puts both from tied vote back to entries', () => {
+            const state = Map({
+                vote: Map({
+                    pair: List.of('Sound of Music', 'Wizard of Oz'),
+                    tally: Map({
+                        'Sound of Music': 3,
+                        'Wizard of Oz': 3
+                    })
+                }),
+                entries: List.of('Mary Poppins', 'Princess Bride')
+            });
+            const nextState = next(state);
+
+            expect(nextState).to.equal(Map({
+                vote: Map({
+                    pair: List.of('Mary Poppins', 'Princess Bride')
+                }),
+                entries: List.of('Sound of Music', 'Wizard of Oz')
+            }));
+        });
+
     });
 
     describe('vote', () => {
