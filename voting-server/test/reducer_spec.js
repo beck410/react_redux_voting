@@ -5,6 +5,14 @@ import reducer from '../src/reducer';
 
 describe('reducer', () => {
 
+    it('has initial state', () => {
+        const action = {type: 'SET_ENTRIES', entries: List.of('Wizard of Oz')};
+        const nextState = reducer(undefined, action);
+        expect(nextState).to.equal(fromJS({
+            entries: ['Wizard of Oz']
+        }));
+    });
+
     it('handles SET_ENTRIES', () => {
         const initialState = Map();
         const action = {type: 'SET_ENTRIES', entries: List.of('Wizard of Oz')};
