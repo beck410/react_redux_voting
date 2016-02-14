@@ -58,4 +58,19 @@ describe('reducer', () => {
         }));
     });
 
+    it('can be used with reduce', () => {
+        const actions = [
+            {type: 'SET_ENTRIES', entries: List.of('Sound of Music', 'Wizard of Oz')},
+            {type: 'NEXT'},
+            {type: 'VOTE', entry: 'Sound of Music'},
+            {type: 'VOTE', entry: 'Sound of Music'},
+            {type: 'VOTE', entry: 'Wizard of Oz'},
+            {type: 'NEXT'}
+        ];
+        const finalState = actions.reduce(reducer, Map());
+
+        expect(finalState).to.equal(fromJS({
+            winner: 'Sound of Music'
+        }));
+    });
 });
