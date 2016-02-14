@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import {List, Map} from 'immutable';
 import {setEntries, next, vote} from '../src/core';
 
-describe('immuntability', () => {
+describe('immutability', () => {
     describe('a number', () => {
         function increment(currentState) {
             return currentState + 1;
